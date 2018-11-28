@@ -1,0 +1,33 @@
+buildscript {
+    repositories {
+        jcenter()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "me.champeau.gradle:jmh-gradle-plugin:0.4.7"
+    }
+}
+
+plugins {
+    id 'java'
+}
+
+apply plugin: "me.champeau.gradle.jmh"
+
+group 'io.demery-pivotal'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile group: 'org.apache.geode', name: 'geode-core', version: 'latest.release'
+    compile group: 'io.micrometer', name: 'micrometer-core', version: 'latest.release'
+    compile group: 'org.assertj', name: 'assertj-core', version: 'latest.release'
+    compile group: 'org.openjdk.jmh', name: 'jmh-generator-annprocess', version: 'latest.release'
+}
