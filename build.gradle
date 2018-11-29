@@ -1,33 +1,29 @@
-buildscript {
-    repositories {
-        jcenter()
-        maven {
-            url "https://plugins.gradle.org/m2/"
-        }
-    }
-    dependencies {
-        classpath "me.champeau.gradle:jmh-gradle-plugin:0.4.7"
-    }
-}
-
 plugins {
     id 'java'
+    id 'me.champeau.gradle.jmh' version '0.4.7'
 }
 
-apply plugin: "me.champeau.gradle.jmh"
-
-group 'io.demery-pivotal'
+group 'org.apache.geode'
 version '1.0-SNAPSHOT'
 
 sourceCompatibility = 1.8
 
 repositories {
-    mavenCentral()
+    jcenter()
 }
 
 dependencies {
+    compile 'org.openjdk.jmh:jmh-generator-annprocess:latest.release'
+    compile 'org.openjdk.jmh:jmh-core:latest.release'
     compile group: 'org.apache.geode', name: 'geode-core', version: 'latest.release'
     compile group: 'io.micrometer', name: 'micrometer-core', version: 'latest.release'
-    compile group: 'org.assertj', name: 'assertj-core', version: 'latest.release'
-    compile group: 'org.openjdk.jmh', name: 'jmh-generator-annprocess', version: 'latest.release'
 }
+
+jmh {
+    duplicateClassesStrategy = 'warn'
+}
+
+wrapper {
+    gradleVersion = 4.9
+}
+
