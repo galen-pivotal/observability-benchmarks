@@ -19,11 +19,29 @@ dependencies {
     compile group: 'io.micrometer', name: 'micrometer-core', version: 'latest.release'
 }
 
+compileJava {
+    options.compilerArgs += '-proc:none'
+}
+
+// Copy these project properties into jmh as strings
+['timeOnIteration'].each {
+    if (project.hasProperty(it)) {
+        jmh.setProperty(it, project[it])
+    }
+}
+
+// Copy these project properties into jmh as integers
+['iterations', 'warmupIterations'].each {
+    if (project.hasProperty(it)) {
+        jmh.setProperty(it, project[it] as Integer)
+    }
+}
+
 jmh {
-    duplicateClassesStrategy = 'warn'
+    // This may not be needed for Gradle 5+
+    duplicateClassesStrategy = DuplicatesStrategy.EXCLUDE
 }
 
 wrapper {
-    gradleVersion = 4.9
+    gradleVersion = 4.10
 }
-
