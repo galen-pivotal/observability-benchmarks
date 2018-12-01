@@ -1,4 +1,4 @@
-package org.apache.geode.observability.benchmarks.micrometer;
+package org.apache.geode.observability.benchmarks.meters.micrometer;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
 
@@ -25,7 +25,7 @@ import org.openjdk.jmh.annotations.Warmup;
 @OutputTimeUnit(SECONDS)
 @State(Scope.Benchmark)
 @SuppressWarnings("unused")
-public class MicrometerBenchmark {
+public class MicrometerMeters {
   private int gaugeSubject;
   private final MeterRegistry registry = new SimpleMeterRegistry();
   private Counter counter;
@@ -45,9 +45,5 @@ public class MicrometerBenchmark {
   @Benchmark
   public double gauge(){
     return gauge.value();
-  }
-
-  @TearDown
-  public void stop(){
   }
 }

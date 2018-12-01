@@ -1,4 +1,4 @@
-package org.apache.geode.observability.benchmarks.geode;
+package org.apache.geode.observability.benchmarks.meters.geode;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
 
@@ -29,7 +29,7 @@ import org.apache.geode.internal.statistics.StatisticsTypeFactoryImpl;
 @OutputTimeUnit(SECONDS)
 @State(Scope.Benchmark)
 @SuppressWarnings("unused")
-public class GeodeStatisticsBenchmark {
+public class GeodeMeters {
   private Statistics atomicIntStatistics;
   private Statistics atomicLongStatistics;
   private Statistics localDoubleStatistics;
@@ -133,9 +133,5 @@ public class GeodeStatisticsBenchmark {
   @Benchmark
   public void localLongGauge() {
     localLongStatistics.incLong(longGaugeId, 1);
-  }
-
-  @TearDown
-  public void stop(){
   }
 }
