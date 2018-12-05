@@ -29,7 +29,7 @@ import org.apache.geode.internal.statistics.StatisticsTypeFactoryImpl;
 @OutputTimeUnit(SECONDS)
 @State(Scope.Benchmark)
 @SuppressWarnings("unused")
-public class GeodeMeters {
+public class GeodeMeterBenchmarks {
   private Statistics atomicIntStatistics;
   private Statistics atomicLongStatistics;
   private Statistics localDoubleStatistics;

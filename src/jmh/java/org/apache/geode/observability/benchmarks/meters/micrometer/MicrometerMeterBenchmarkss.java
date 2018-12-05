@@ -25,7 +25,7 @@ import org.openjdk.jmh.annotations.Warmup;
 @OutputTimeUnit(SECONDS)
 @State(Scope.Benchmark)
 @SuppressWarnings("unused")
-public class MicrometerMeters {
+public class MicrometerMeterBenchmarkss {
   private int gaugeSubject;
   private final MeterRegistry registry = new SimpleMeterRegistry();
   private Counter counter;

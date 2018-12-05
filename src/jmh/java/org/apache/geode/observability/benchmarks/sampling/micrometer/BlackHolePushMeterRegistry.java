@@ -16,6 +16,7 @@ import io.micrometer.core.instrument.Measurement;
 import io.micrometer.core.instrument.Meter;
 import io.micrometer.core.instrument.MockClock;
 import io.micrometer.core.instrument.Timer;
+import io.micrometer.core.instrument.cumulative.CumulativeCounter;
 import io.micrometer.core.instrument.distribution.DistributionStatisticConfig;
 import io.micrometer.core.instrument.distribution.pause.PauseDetector;
 import io.micrometer.core.instrument.internal.DefaultGauge;
@@ -61,7 +62,7 @@ public class BlackHolePushMeterRegistry extends PushMeterRegistry {
 
   @Override
   protected Counter newCounter(Meter.Id id) {
-    return new SelfIncrementingCounter(id);
+    return new CumulativeCounter(id);
   }
 
   @Override

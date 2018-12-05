@@ -31,16 +31,16 @@ import org.openjdk.jmh.infra.Blackhole;
 @OutputTimeUnit(SECONDS)
 @State(Scope.Benchmark)
 @SuppressWarnings("unused")
-public class MicrometerPushSampler {
+public class MicrometerPushSamplerBenchmarks {
   private BlackHolePushMeterRegistry registry;
 
   @Setup
   public void populateRegistry(Blackhole blackHole) {
     registry = new BlackHolePushMeterRegistry(blackHole);
-    IntStream.range(0, 1000)
+    IntStream.range(0, 250)
         .mapToObj(i -> "counter" + i)
         .forEach(registry::counter);
-    IntStream.range(0, 1000)
+    IntStream.range(0, 250)
         .mapToObj(i -> "gauge" + i)
         .map(Counter::builder)
         .forEach(counterBuilder -> counterBuilder.register(registry));
