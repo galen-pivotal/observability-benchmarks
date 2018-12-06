@@ -8,12 +8,12 @@ public class MapBackedPushRegistryConfig implements PushRegistryConfig {
   private final String prefix;
   private final Map<String, String> options;
 
-  public MapBackedPushRegistryConfig(String prefix, Map<String,String> options) {
+  public MapBackedPushRegistryConfig(String prefix, Map<String, String> options) {
     this.prefix = prefix;
     this.options = options;
   }
 
-  public MapBackedPushRegistryConfig(Map<String,String> options) {
+  public MapBackedPushRegistryConfig(Map<String, String> options) {
     this("", options);
   }
 

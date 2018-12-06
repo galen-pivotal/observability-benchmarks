@@ -1,32 +1,57 @@
 package org.apache.geode.observability.benchmarks.impact;
 
-import static java.util.concurrent.TimeUnit.SECONDS;
+import static java.util.concurrent.TimeUnit.MINUTES;
 
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.BenchmarkMode;
-import org.openjdk.jmh.annotations.Fork;
 import org.openjdk.jmh.annotations.Measurement;
 import org.openjdk.jmh.annotations.Mode;
+import org.openjdk.jmh.annotations.Threads;
 import org.openjdk.jmh.annotations.Warmup;
 
-import org.apache.geode.observability.states.WithCacheOpen;
 import org.apache.geode.observability.states.WithBlackHoleSampling;
+import org.apache.geode.observability.states.WithCacheOpen;
 
-@Measurement(iterations = 10, time = 10, timeUnit = SECONDS)
-@Warmup(iterations = 1, time = 10, timeUnit = SECONDS)
-@Fork(1)
-//@Threads(1)
+@Measurement(iterations = 10, time = 10, timeUnit = MINUTES)
+@Warmup(iterations = 1, time = 1, timeUnit = MINUTES)
 @BenchmarkMode(Mode.Throughput)
 @SuppressWarnings("unused")
 public class ImpactOfMicrometerSamplingOnPuts {
 
+  @Threads(1)
   @Benchmark
-  public void putsWithMicrometer(WithCacheOpen cache, WithBlackHoleSampling micrometer) {
+  public void putsWithMicrometer1Thread(WithCacheOpen cache, WithBlackHoleSampling micrometer) {
     cache.region.put(2, "foo");
   }
 
+  @Threads(1)
   @Benchmark
-  public void putsWithoutMicrometer(WithCacheOpen cache) {
+  public void putsWithoutMicrometer1Thread(WithCacheOpen cache) {
+    cache.region.put(2, "foo");
+  }
+
+  @Threads(-1)
+  @Benchmark
+  public void putsWithMicrometerAllAvailableThreads(WithCacheOpen cache,
+                                                    WithBlackHoleSampling micrometer) {
+    cache.region.put(2, "foo");
+  }
+
+  @Threads(-1)
+  @Benchmark
+  public void putsWithoutMicrometerAllAvailableThreads(WithCacheOpen cache) {
+    cache.region.put(2, "foo");
+  }
+
+  @Threads(100)
+  @Benchmark
+  public void putsWithMicrometer100Threads(WithCacheOpen cache, WithBlackHoleSampling micrometer) {
+    cache.region.put(2, "foo");
+  }
+
+  @Threads(100)
+  @Benchmark
+  public void putsWithoutMicrometer100Threads(WithCacheOpen cache) {
     cache.region.put(2, "foo");
   }
 }

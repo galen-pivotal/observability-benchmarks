@@ -55,12 +55,16 @@ public class GeodeSamplerBenchmarks {
     StatisticDescriptor[] intCounterDescriptors = IntStream.range(0, 250)
         .mapToObj(i -> manager.createIntCounter("intcounter" + i, "", ""))
         .toArray(StatisticDescriptor[]::new);
-    StatisticsType intCounterStatisticsType = manager.createType("intcounters", "", intCounterDescriptors);
+    StatisticsType
+        intCounterStatisticsType =
+        manager.createType("intcounters", "", intCounterDescriptors);
     Statistics intCounterStatistics = manager.createStatistics(intCounterStatisticsType);
     StatisticDescriptor[] intGaugeDescriptors = IntStream.range(0, 250)
         .mapToObj(i -> manager.createIntGauge("intgauge" + i, "", ""))
         .toArray(StatisticDescriptor[]::new);
-    StatisticsType intGaugeStatisticsType = manager.createType("intgauges", "", intGaugeDescriptors);
+    StatisticsType
+        intGaugeStatisticsType =
+        manager.createType("intgauges", "", intGaugeDescriptors);
     Statistics intGaugeStatistics = manager.createStatistics(intCounterStatisticsType);
   }
 

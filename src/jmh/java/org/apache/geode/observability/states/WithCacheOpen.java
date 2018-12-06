@@ -3,14 +3,10 @@ package org.apache.geode.observability.states;
 import static org.apache.geode.distributed.ConfigurationProperties.LOCATORS;
 import static org.apache.geode.distributed.ConfigurationProperties.LOG_LEVEL;
 
-import java.time.Duration;
-
-import io.micrometer.core.instrument.push.PushRegistryConfig;
 import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.Setup;
 import org.openjdk.jmh.annotations.State;
 import org.openjdk.jmh.annotations.TearDown;
-import org.openjdk.jmh.infra.Blackhole;
 
 import org.apache.geode.cache.Cache;
 import org.apache.geode.cache.CacheFactory;

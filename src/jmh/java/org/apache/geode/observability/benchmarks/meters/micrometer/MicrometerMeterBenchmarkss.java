@@ -15,7 +15,6 @@ import org.openjdk.jmh.annotations.OutputTimeUnit;
 import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.Setup;
 import org.openjdk.jmh.annotations.State;
-import org.openjdk.jmh.annotations.TearDown;
 import org.openjdk.jmh.annotations.Warmup;
 
 @Measurement(iterations = 10, time = 10, timeUnit = SECONDS)
@@ -32,18 +31,18 @@ public class MicrometerMeterBenchmarkss {
   private Gauge gauge;
 
   @Setup
-  public void start(){
+  public void start() {
     counter = Counter.builder("micrometer.counter").register(registry);
     gauge = Gauge.builder("micrometer.gauge", () -> ++gaugeSubject).register(registry);
   }
 
   @Benchmark
-  public void counter(){
+  public void counter() {
     counter.increment();
   }
 
   @Benchmark
-  public double gauge(){
+  public double gauge() {
     return gauge.value();
   }
 }

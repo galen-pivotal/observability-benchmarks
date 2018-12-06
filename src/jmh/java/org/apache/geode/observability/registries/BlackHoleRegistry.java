@@ -36,14 +36,14 @@ import org.openjdk.jmh.infra.Blackhole;
  * Samples every measurement of every meter and writes it to a black hole.
  */
 public class BlackHoleRegistry extends PushMeterRegistry {
-  private static final Map<String,String> DEFAULT_CONFIG = new HashMap<>();
+  private static final Map<String, String> DEFAULT_CONFIG = new HashMap<>();
   private final Blackhole blackHole;
 
   public BlackHoleRegistry(Blackhole blackhole) {
     this(DEFAULT_CONFIG, blackhole);
   }
 
-  public BlackHoleRegistry(Map<String,String> options, Blackhole blackhole) {
+  public BlackHoleRegistry(Map<String, String> options, Blackhole blackhole) {
     this(new MapBackedPushRegistryConfig(options), blackhole);
   }
 
@@ -77,7 +77,7 @@ public class BlackHoleRegistry extends PushMeterRegistry {
 
   @Override
   protected LongTaskTimer newLongTaskTimer(Meter.Id id) {
-        return new NoopLongTaskTimer(id);
+    return new NoopLongTaskTimer(id);
   }
 
   @Override

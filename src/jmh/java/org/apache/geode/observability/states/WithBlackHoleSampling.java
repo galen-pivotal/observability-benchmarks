@@ -1,6 +1,5 @@
 package org.apache.geode.observability.states;
 
-import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Executors;
@@ -19,15 +18,21 @@ import org.apache.geode.observability.registries.BlackHoleRegistry;
 
 @State(Scope.Benchmark)
 public class WithBlackHoleSampling {
-  public Map<String,String> options = new HashMap<>();
+  public Map<String, String> options = new HashMap<>();
   private PushMeterRegistry registry;
 
-  @Param({"10", "100", "1000"})
+  //  @Param({"10", "100", "1000"})
+  @Param({"100"})
   public int numberOfMeters;
+
+  // Durations in ISO-8601 format, suitable for Duration.parse()
+//  @Param({"PT1S", "PT10S", "PT30S"})
+  @Param({"PT30S"})
+  public String samplingInterval;
 
   @Setup
   public void startSampling(Blackhole blackhole) {
-    options.put(".step", Duration.ofSeconds(1).toString());
+    options.put(".step", samplingInterval);
 
     registry = new BlackHoleRegistry(options, blackhole);
 
