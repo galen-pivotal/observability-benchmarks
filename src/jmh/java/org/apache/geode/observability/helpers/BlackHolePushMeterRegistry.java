@@ -1,4 +1,4 @@
-package org.apache.geode.observability.benchmarks.sampling.micrometer;
+package org.apache.geode.observability.helpers;
 
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
 
@@ -34,10 +34,14 @@ import org.openjdk.jmh.infra.Blackhole;
  * Samples every measurement of every meter and writes it to a black hole.
  */
 public class BlackHolePushMeterRegistry extends PushMeterRegistry {
-  private static final PushRegistryConfig config = new BlackHolePushRegistryConfig();
+  private static final PushRegistryConfig DEFAULT_CONFIG = new BlackHolePushRegistryConfig();
   private final Blackhole blackHole;
 
   public BlackHolePushMeterRegistry(Blackhole blackHole) {
+    this(DEFAULT_CONFIG, blackHole);
+  }
+
+  public BlackHolePushMeterRegistry(PushRegistryConfig config, Blackhole blackHole) {
     super(config, MockClock.SYSTEM);
     this.blackHole = blackHole;
   }

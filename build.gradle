@@ -15,6 +15,7 @@ repositories {
 dependencies {
     compile 'org.openjdk.jmh:jmh-generator-annprocess:latest.release'
     compile 'org.openjdk.jmh:jmh-core:latest.release'
+    compile 'org.springframework.shell:spring-shell:1.2.0.RELEASE'
     compile group: 'org.apache.geode', name: 'geode-core', version: 'latest.release'
     compile group: 'io.micrometer', name: 'micrometer-core', version: 'latest.release'
 }

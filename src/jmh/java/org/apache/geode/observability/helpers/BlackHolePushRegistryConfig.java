@@ -1,4 +1,4 @@
-package org.apache.geode.observability.benchmarks.sampling.micrometer;
+package org.apache.geode.observability.helpers;
 
 import io.micrometer.core.instrument.push.PushRegistryConfig;
 

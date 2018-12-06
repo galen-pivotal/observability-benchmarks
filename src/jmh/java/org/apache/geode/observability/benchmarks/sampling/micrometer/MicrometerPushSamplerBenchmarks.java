@@ -17,6 +17,8 @@ import org.openjdk.jmh.annotations.State;
 import org.openjdk.jmh.annotations.Warmup;
 import org.openjdk.jmh.infra.Blackhole;
 
+import org.apache.geode.observability.helpers.BlackHolePushMeterRegistry;
+
 /**
  * Measures the sampling throughput of a simple Micrometer push registry.
  *

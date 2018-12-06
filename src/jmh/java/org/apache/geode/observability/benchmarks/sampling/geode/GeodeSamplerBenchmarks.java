@@ -13,6 +13,7 @@ import org.openjdk.jmh.annotations.OutputTimeUnit;
 import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.Setup;
 import org.openjdk.jmh.annotations.State;
+import org.openjdk.jmh.annotations.Threads;
 import org.openjdk.jmh.annotations.Warmup;
 
 import org.apache.geode.CancelCriterion;
@@ -29,6 +30,7 @@ import org.apache.geode.internal.statistics.StatisticsSampler;
 @Warmup(iterations = 1, time = 10, timeUnit = SECONDS)
 @Fork(1)
 @OutputTimeUnit(SECONDS)
+@Threads(1)
 @State(Scope.Benchmark)
 @SuppressWarnings("unused")
 public class GeodeSamplerBenchmarks {
