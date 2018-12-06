@@ -1,11 +1,14 @@
-package org.apache.geode.observability.helpers;
+package org.apache.geode.observability.registries;
 
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.function.ToDoubleFunction;
 import java.util.function.ToLongFunction;
 
+import io.micrometer.core.instrument.Clock;
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.DistributionSummary;
 import io.micrometer.core.instrument.FunctionCounter;
@@ -14,7 +17,6 @@ import io.micrometer.core.instrument.Gauge;
 import io.micrometer.core.instrument.LongTaskTimer;
 import io.micrometer.core.instrument.Measurement;
 import io.micrometer.core.instrument.Meter;
-import io.micrometer.core.instrument.MockClock;
 import io.micrometer.core.instrument.Timer;
 import io.micrometer.core.instrument.cumulative.CumulativeCounter;
 import io.micrometer.core.instrument.distribution.DistributionStatisticConfig;
@@ -33,17 +35,21 @@ import org.openjdk.jmh.infra.Blackhole;
 /**
  * Samples every measurement of every meter and writes it to a black hole.
  */
-public class BlackHolePushMeterRegistry extends PushMeterRegistry {
-  private static final PushRegistryConfig DEFAULT_CONFIG = new BlackHolePushRegistryConfig();
+public class BlackHoleRegistry extends PushMeterRegistry {
+  private static final Map<String,String> DEFAULT_CONFIG = new HashMap<>();
   private final Blackhole blackHole;
 
-  public BlackHolePushMeterRegistry(Blackhole blackHole) {
-    this(DEFAULT_CONFIG, blackHole);
+  public BlackHoleRegistry(Blackhole blackhole) {
+    this(DEFAULT_CONFIG, blackhole);
   }
 
-  public BlackHolePushMeterRegistry(PushRegistryConfig config, Blackhole blackHole) {
-    super(config, MockClock.SYSTEM);
-    this.blackHole = blackHole;
+  public BlackHoleRegistry(Map<String,String> options, Blackhole blackhole) {
+    this(new MapBackedPushRegistryConfig(options), blackhole);
+  }
+
+  public BlackHoleRegistry(PushRegistryConfig config, Blackhole blackhole) {
+    super(config, Clock.SYSTEM);
+    this.blackHole = blackhole;
   }
 
   @Override

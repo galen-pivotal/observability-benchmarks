@@ -17,7 +17,7 @@ import org.openjdk.jmh.annotations.State;
 import org.openjdk.jmh.annotations.Warmup;
 import org.openjdk.jmh.infra.Blackhole;
 
-import org.apache.geode.observability.helpers.BlackHolePushMeterRegistry;
+import org.apache.geode.observability.registries.BlackHoleRegistry;
 
 /**
  * Measures the sampling throughput of a simple Micrometer push registry.
@@ -34,11 +34,11 @@ import org.apache.geode.observability.helpers.BlackHolePushMeterRegistry;
 @State(Scope.Benchmark)
 @SuppressWarnings("unused")
 public class MicrometerPushSamplerBenchmarks {
-  private BlackHolePushMeterRegistry registry;
+  private BlackHoleRegistry registry;
 
   @Setup
   public void populateRegistry(Blackhole blackHole) {
-    registry = new BlackHolePushMeterRegistry(blackHole);
+    registry = new BlackHoleRegistry(blackHole);
     IntStream.range(0, 250)
         .mapToObj(i -> "counter" + i)
         .forEach(registry::counter);
