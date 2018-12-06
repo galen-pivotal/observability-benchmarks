@@ -7,6 +7,7 @@ import org.openjdk.jmh.annotations.BenchmarkMode;
 import org.openjdk.jmh.annotations.Measurement;
 import org.openjdk.jmh.annotations.Mode;
 import org.openjdk.jmh.annotations.Threads;
+import org.openjdk.jmh.annotations.Timeout;
 import org.openjdk.jmh.annotations.Warmup;
 
 import org.apache.geode.observability.states.WithBlackHoleSampling;
@@ -14,6 +15,7 @@ import org.apache.geode.observability.states.WithCacheOpen;
 
 @Measurement(iterations = 10, time = 10, timeUnit = MINUTES)
 @Warmup(iterations = 1, time = 1, timeUnit = MINUTES)
+@Timeout(time = 20, timeUnit = MINUTES)
 @BenchmarkMode(Mode.Throughput)
 @SuppressWarnings("unused")
 public class ImpactOfMicrometerSamplingOnPuts {

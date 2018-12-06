@@ -25,7 +25,9 @@ public class WithBlackHoleSampling {
   @Param({"100"})
   public int numberOfMeters;
 
-  // Durations in ISO-8601 format, suitable for Duration.parse()
+  /**
+   * Sampling intervals represented in the format accepted by{@link java.time.Duration#parse}.
+   */
 //  @Param({"PT1S", "PT10S", "PT30S"})
   @Param({"PT30S"})
   public String samplingInterval;
