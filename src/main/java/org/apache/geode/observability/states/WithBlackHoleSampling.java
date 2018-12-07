@@ -29,7 +29,7 @@ import org.apache.geode.observability.registries.BlackHoleRegistry;
  */
 @State(Scope.Benchmark)
 public class WithBlackHoleSampling {
-  public Map<String, String> options = new HashMap<>();
+  private final Map<String, String> options = new HashMap<>();
   private PushMeterRegistry registry;
 
   /**

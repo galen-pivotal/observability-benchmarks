@@ -1,4 +1,4 @@
-package org.apache.geode.observability.benchmarks.sampling.micrometer;
+package org.apache.geode.observability.benchmarks.sampling;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
 
@@ -13,6 +13,8 @@ import org.openjdk.jmh.annotations.Mode;
 import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.Setup;
 import org.openjdk.jmh.annotations.State;
+import org.openjdk.jmh.annotations.Threads;
+import org.openjdk.jmh.annotations.Timeout;
 import org.openjdk.jmh.annotations.Warmup;
 import org.openjdk.jmh.infra.Blackhole;
 
@@ -28,10 +30,11 @@ import org.apache.geode.observability.registries.BlackHoleRegistry;
  */
 @Measurement(iterations = 10, time = 10, timeUnit = SECONDS)
 @Warmup(iterations = 1, time = 10, timeUnit = SECONDS)
+@Timeout(time = 20, timeUnit = SECONDS)
 @Fork(1)
+@Threads(1)
 @BenchmarkMode(Mode.Throughput)
 @State(Scope.Benchmark)
-@SuppressWarnings("unused")
 public class MicrometerSampling {
   private BlackHoleRegistry registry;
 

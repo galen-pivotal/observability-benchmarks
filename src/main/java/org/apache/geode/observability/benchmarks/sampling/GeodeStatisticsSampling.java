@@ -1,4 +1,4 @@
-package org.apache.geode.observability.benchmarks.sampling.geode;
+package org.apache.geode.observability.benchmarks.sampling;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
 
@@ -14,6 +14,7 @@ import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.Setup;
 import org.openjdk.jmh.annotations.State;
 import org.openjdk.jmh.annotations.Threads;
+import org.openjdk.jmh.annotations.Timeout;
 import org.openjdk.jmh.annotations.Warmup;
 
 import org.apache.geode.CancelCriterion;
@@ -28,11 +29,11 @@ import org.apache.geode.internal.statistics.StatisticsSampler;
 
 @Measurement(iterations = 10, time = 10, timeUnit = SECONDS)
 @Warmup(iterations = 1, time = 10, timeUnit = SECONDS)
+@Timeout(time = 20, timeUnit = SECONDS)
 @Fork(1)
 @Threads(1)
 @BenchmarkMode(Mode.Throughput)
 @State(Scope.Benchmark)
-@SuppressWarnings("unused")
 public class GeodeStatisticsSampling {
   SampleCollector collector;
 
@@ -52,20 +53,23 @@ public class GeodeStatisticsSampling {
     StatisticsManager manager = new LocalStatisticsFactory(cancelCriterion);
     StatisticsSampler sampler = new SimpleStatSampler(cancelCriterion, manager);
     collector = new SampleCollector(sampler);
+
     StatisticDescriptor[] intCounterDescriptors = IntStream.range(0, 250)
         .mapToObj(i -> manager.createIntCounter("intcounter" + i, "", ""))
         .toArray(StatisticDescriptor[]::new);
     StatisticsType
         intCounterStatisticsType =
         manager.createType("intcounters", "", intCounterDescriptors);
-    Statistics intCounterStatistics = manager.createStatistics(intCounterStatisticsType);
+
     StatisticDescriptor[] intGaugeDescriptors = IntStream.range(0, 250)
         .mapToObj(i -> manager.createIntGauge("intgauge" + i, "", ""))
         .toArray(StatisticDescriptor[]::new);
     StatisticsType
         intGaugeStatisticsType =
         manager.createType("intgauges", "", intGaugeDescriptors);
-    Statistics intGaugeStatistics = manager.createStatistics(intCounterStatisticsType);
+
+    manager.createStatistics(intCounterStatisticsType);
+    manager.createStatistics(intGaugeStatisticsType);
   }
 
   @Benchmark

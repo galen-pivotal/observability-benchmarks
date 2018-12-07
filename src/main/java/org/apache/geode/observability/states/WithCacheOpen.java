@@ -18,8 +18,10 @@ import org.apache.geode.cache.RegionShortcut;
  */
 @State(Scope.Benchmark)
 public class WithCacheOpen {
-  private Cache cache;
+  public Object key = 2;
+  public Object value = "value";
   public Region<Object, Object> region;
+  private Cache cache;
 
   @Setup
   public void createCache() {

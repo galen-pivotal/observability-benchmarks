@@ -2,19 +2,77 @@
 
 Comparing Geode statistics to Micrometer meters.
 
-## Run Configurations
+## Building
 
-**Quick Run:**
-1 iteration, 100ms per iteration, no warmup
+Build with maven:
 
-Program arguments: `-i 1 -r 100ms -wi 0`
+> `mvn clean package`
 
-**Medium Run**
-1 iteration, 1s per iteration, no warmup
+## Running Benchmarks from the Command Line
 
-Program arguments: `-i 1 -r 1s -wi 0`
+The basic command line format:
 
-**Full Run:**
-Defined by annotations in the benchmark code
+> `java -jar target/benchmarks.jar [regex*] [options]`
 
-Program arguments: <none>
+For example:
+
+> `java -jar target/benchmarks.jar -i 100 -r 1m -wi 1 org.apache.geode.observability.benchmarks.meters.*`
+
+To get help:
+
+> `java -jar target/benchmarks.jar -h`
+
+Also see below for command line options.
+
+To list all benchmarks:
+
+> `java -jar target/benchmarks.jar -l`
+
+To list all benchmarks and their parameters:
+> `java -jar target/benchmarks.jar -lp`
+
+### Common Command Line Options
+
+```
+Measurement
+-i n	: # iterations
+-r dur	: Duration of each iteration (e.g. 10m)
+-to dur	: Timeout for each iteration
+
+Benchmark Parameters
+-p name=value,value,...
+
+Warmup
+-wi	: # warmup iterations
+
+Output
+-o f	: Redirect output to file f
+-v mode	: Verbosity mode (SILENT, NORMAL, EXTRA)
+-rff f	: Write machine readable results to f
+-rf fmt	: Use fmt to format machine readable results
+
+Threads and JVMs
+-t n	: # threads
+-f n	: # forks
+
+Help
+-h	: display help
+-l	: list benchmarks and exit
+-lp	: list benchmarks and parameters, then exit
+
+```
+To see additional command line options, run
+
+> `java -jar target/benchmarks.jar -h`
+ 
+## Running Benchmarks in IntelliJ
+
+First, install the JMH plugin.
+You'll find it in the "Marketplace" section of the plugins.
+
+Right-click a benchmark class or method,
+then select one of the `Run` options from the menu.
+
+Edit the run configuration's _Program arguments_ field
+to specify command line arguments,
+the same as if you were running on the command line.

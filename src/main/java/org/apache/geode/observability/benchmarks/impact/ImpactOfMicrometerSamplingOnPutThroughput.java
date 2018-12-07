@@ -15,60 +15,29 @@ import org.apache.geode.observability.states.WithBlackHoleSampling;
 import org.apache.geode.observability.states.WithCacheOpen;
 
 /**
- * Measures the effect of micrometer sampling on cache put throughput. Each benchmark measures the
- * throughput of cache puts. Half of the benchmarks start a Micrometer meter registry that
- * periodically samples dummy meters. The other half do not start a Micrometer registry.
+ * Measures the throughput of cache puts with and without micrometer sampling in the background.
  */
 @Measurement(iterations = 10, time = 10, timeUnit = MINUTES)
 @Warmup(iterations = 1, time = 10, timeUnit = MINUTES)
 @Timeout(time = 20, timeUnit = MINUTES)
 @Fork(1)
+@Threads(1)
 @BenchmarkMode(Mode.Throughput)
-@SuppressWarnings("unused")
 public class ImpactOfMicrometerSamplingOnPutThroughput {
-
-  @Threads(1)
+  /**
+   * Measures the throughput of cache puts with micrometer sampling in the background.
+   */
   @Benchmark
-  public void putsOn1Thread_withMicrometerSampling(WithCacheOpen cache,
-                                                   WithBlackHoleSampling micrometer) {
-    cache.region.put(2, "foo");
-  }
-
-  @Threads(1)
-  @Benchmark
-  public void putsOn1Thread_withoutMicrometerSampling(WithCacheOpen cache) {
-    cache.region.put(2, "foo");
+  public void puts_withMicrometerSampling(WithCacheOpen state,
+                                          @SuppressWarnings("unused") WithBlackHoleSampling background) {
+    state.region.put(state.key, state.value);
   }
 
   /**
-   * The number of threads is determined by {@link Runtime#availableProcessors()}
+   * Measures the throughput of cache puts without micrometer sampling in the background.
    */
-  @Threads(-1)
   @Benchmark
-  public void putsOnAllAvailableThreads_withMicrometerSampling(WithCacheOpen cache,
-                                                               WithBlackHoleSampling micrometer) {
-    cache.region.put(2, "foo");
-  }
-
-  /**
-   * The number of threads is determined by {@link Runtime#availableProcessors()}
-   */
-  @Threads(-1)
-  @Benchmark
-  public void putsOnAllAvailableThreads_withoutMicrometerSampling(WithCacheOpen cache) {
-    cache.region.put(2, "foo");
-  }
-
-  @Threads(100)
-  @Benchmark
-  public void putsOn100Threads_withMicrometerSampling(WithCacheOpen cache,
-                                                      WithBlackHoleSampling micrometer) {
-    cache.region.put(2, "foo");
-  }
-
-  @Threads(100)
-  @Benchmark
-  public void putsOn100Threads_withoutMicrometerSampling(WithCacheOpen cache) {
-    cache.region.put(2, "foo");
+  public void puts_withoutMicrometerSampling(WithCacheOpen state) {
+    state.region.put(state.key, state.value);
   }
 }
