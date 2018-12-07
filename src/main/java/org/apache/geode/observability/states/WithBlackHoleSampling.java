@@ -16,20 +16,32 @@ import org.openjdk.jmh.infra.Blackhole;
 
 import org.apache.geode.observability.registries.BlackHoleRegistry;
 
+/**
+ * Starts a push meter registry that periodically samples each registered meter and writes the
+ * sampled value to a black hole.
+ * <p>
+ * Parameters:
+ * <ul>
+ * <li>{@link #numberOfMeters the number of meters to add to the registry}</li>
+ * <li>{@link #samplingInterval the sampling interval}</li>
+ * </ul>
+ * The meters are not connected to anything. Half of the meters are counters and half are gauges.
+ */
 @State(Scope.Benchmark)
 public class WithBlackHoleSampling {
   public Map<String, String> options = new HashMap<>();
   private PushMeterRegistry registry;
 
-  //  @Param({"10", "100", "1000"})
-  @Param({"100"})
+  /**
+   * The number of meters to register. Half will be counters and half will be gauges.
+   */
+  @Param({"10", "100", "1000"})
   public int numberOfMeters;
 
   /**
-   * Sampling intervals represented in the format accepted by{@link java.time.Duration#parse}.
+   * The sampling interval, represented in the format accepted by{@link java.time.Duration#parse}.
    */
-//  @Param({"PT1S", "PT10S", "PT30S"})
-  @Param({"PT30S"})
+  @Param({"PT1S", "PT10S", "PT30S"})
   public String samplingInterval;
 
   @Setup

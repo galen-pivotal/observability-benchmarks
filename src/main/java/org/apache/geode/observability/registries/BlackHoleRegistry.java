@@ -33,7 +33,9 @@ import io.micrometer.core.instrument.push.PushRegistryConfig;
 import org.openjdk.jmh.infra.Blackhole;
 
 /**
- * Samples every measurement of every meter and writes it to a black hole.
+ * A push registry that samples each measurement of each registered meter and writes the sampled
+ * value to a black hole. Writing to a black hole prevents the JIT compiler from considering the
+ * sampling code to be dead code.
  */
 public class BlackHoleRegistry extends PushMeterRegistry {
   private static final Map<String, String> DEFAULT_CONFIG = new HashMap<>();

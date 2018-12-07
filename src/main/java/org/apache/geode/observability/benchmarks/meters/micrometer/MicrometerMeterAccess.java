@@ -17,14 +17,16 @@ import org.openjdk.jmh.annotations.Setup;
 import org.openjdk.jmh.annotations.State;
 import org.openjdk.jmh.annotations.Warmup;
 
+/**
+ * Measures the throughput of accessing Micrometer meters and gauges.
+ */
 @Measurement(iterations = 10, time = 10, timeUnit = SECONDS)
 @Warmup(iterations = 1, time = 10, timeUnit = SECONDS)
 @Fork(1)
 @BenchmarkMode(Mode.Throughput)
-@OutputTimeUnit(SECONDS)
 @State(Scope.Benchmark)
 @SuppressWarnings("unused")
-public class MicrometerMeterBenchmarkss {
+public class MicrometerMeterAccess {
   private int gaugeSubject;
   private final MeterRegistry registry = new SimpleMeterRegistry();
   private Counter counter;
@@ -37,12 +39,12 @@ public class MicrometerMeterBenchmarkss {
   }
 
   @Benchmark
-  public void counter() {
+  public void updateCounter() {
     counter.increment();
   }
 
   @Benchmark
-  public double gauge() {
+  public double updateGauge() {
     return gauge.value();
   }
 }

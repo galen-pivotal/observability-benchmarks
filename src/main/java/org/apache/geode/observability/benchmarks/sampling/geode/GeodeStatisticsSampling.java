@@ -29,11 +29,11 @@ import org.apache.geode.internal.statistics.StatisticsSampler;
 @Measurement(iterations = 10, time = 10, timeUnit = SECONDS)
 @Warmup(iterations = 1, time = 10, timeUnit = SECONDS)
 @Fork(1)
-@OutputTimeUnit(SECONDS)
 @Threads(1)
+@BenchmarkMode(Mode.Throughput)
 @State(Scope.Benchmark)
 @SuppressWarnings("unused")
-public class GeodeSamplerBenchmarks {
+public class GeodeStatisticsSampling {
   SampleCollector collector;
 
   @Setup
@@ -68,7 +68,6 @@ public class GeodeSamplerBenchmarks {
     Statistics intGaugeStatistics = manager.createStatistics(intCounterStatisticsType);
   }
 
-  @BenchmarkMode(Mode.Throughput)
   @Benchmark
   public void sample() {
     collector.sample(0);

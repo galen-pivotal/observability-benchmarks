@@ -10,7 +10,6 @@ import org.openjdk.jmh.annotations.BenchmarkMode;
 import org.openjdk.jmh.annotations.Fork;
 import org.openjdk.jmh.annotations.Measurement;
 import org.openjdk.jmh.annotations.Mode;
-import org.openjdk.jmh.annotations.OutputTimeUnit;
 import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.Setup;
 import org.openjdk.jmh.annotations.State;
@@ -30,10 +29,10 @@ import org.apache.geode.observability.registries.BlackHoleRegistry;
 @Measurement(iterations = 10, time = 10, timeUnit = SECONDS)
 @Warmup(iterations = 1, time = 10, timeUnit = SECONDS)
 @Fork(1)
-@OutputTimeUnit(SECONDS)
+@BenchmarkMode(Mode.Throughput)
 @State(Scope.Benchmark)
 @SuppressWarnings("unused")
-public class MicrometerPushSamplerBenchmarks {
+public class MicrometerSampling {
   private BlackHoleRegistry registry;
 
   @Setup
@@ -48,9 +47,8 @@ public class MicrometerPushSamplerBenchmarks {
         .forEach(counterBuilder -> counterBuilder.register(registry));
   }
 
-  @BenchmarkMode(Mode.Throughput)
   @Benchmark
-  public void publish() {
+  public void sample() {
     registry.publish();
   }
 }

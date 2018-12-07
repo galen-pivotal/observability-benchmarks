@@ -13,6 +13,9 @@ import org.apache.geode.cache.CacheFactory;
 import org.apache.geode.cache.Region;
 import org.apache.geode.cache.RegionShortcut;
 
+/**
+ * Opens a cache for use in the benchmark.
+ */
 @State(Scope.Benchmark)
 public class WithCacheOpen {
   private Cache cache;

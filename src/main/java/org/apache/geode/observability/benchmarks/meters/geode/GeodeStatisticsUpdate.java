@@ -21,14 +21,16 @@ import org.apache.geode.StatisticsTypeFactory;
 import org.apache.geode.internal.statistics.LocalStatisticsFactory;
 import org.apache.geode.internal.statistics.StatisticsTypeFactoryImpl;
 
+/**
+ * Measures the throughput of updating selected kinds of Geode statistics.
+ */
 @Measurement(iterations = 10, time = 10, timeUnit = SECONDS)
 @Warmup(iterations = 1, time = 10, timeUnit = SECONDS)
 @Fork(1)
 @BenchmarkMode(Mode.Throughput)
-@OutputTimeUnit(SECONDS)
 @State(Scope.Benchmark)
 @SuppressWarnings("unused")
-public class GeodeMeterBenchmarks {
+public class GeodeStatisticsUpdate {
   private Statistics atomicIntStatistics;
   private Statistics atomicLongStatistics;
   private Statistics localDoubleStatistics;
@@ -85,52 +87,52 @@ public class GeodeMeterBenchmarks {
   }
 
   @Benchmark
-  public void atomicIntCounter() {
+  public void updateAtomicIntCounter() {
     atomicIntStatistics.incInt(intCounterId, 1);
   }
 
   @Benchmark
-  public void atomicIntGauge() {
+  public void updateAtomicIntGauge() {
     atomicIntStatistics.incInt(intGaugeId, 1);
   }
 
   @Benchmark
-  public void atomicLongCounter() {
+  public void updateAtomicLongCounter() {
     atomicLongStatistics.incLong(longCounterId, 1);
   }
 
   @Benchmark
-  public void atomicLongGauge() {
+  public void updateAtomicLongGauge() {
     atomicLongStatistics.incLong(longGaugeId, 1);
   }
 
   @Benchmark
-  public void localDoubleCounter() {
+  public void updateLocalDoubleCounter() {
     localDoubleStatistics.incDouble(doubleCounterId, 1);
   }
 
   @Benchmark
-  public void localDoubleGauge() {
+  public void updateLocalDoubleGauge() {
     localDoubleStatistics.incDouble(doubleGaugeId, 1);
   }
 
   @Benchmark
-  public void localIntCounter() {
+  public void updateLocalIntCounter() {
     localIntStatistics.incInt(intCounterId, 1);
   }
 
   @Benchmark
-  public void localIntGauge() {
+  public void updateLocalIntGauge() {
     localIntStatistics.incInt(intGaugeId, 1);
   }
 
   @Benchmark
-  public void localLongCounter() {
+  public void updateLocalLongCounter() {
     localLongStatistics.incLong(longCounterId, 1);
   }
 
   @Benchmark
-  public void localLongGauge() {
+  public void updateLocalLongGauge() {
     localLongStatistics.incLong(longGaugeId, 1);
   }
 }
