@@ -35,13 +35,13 @@ public class WithBlackHoleSampling {
   /**
    * The number of meters to register. Half will be counters and half will be gauges.
    */
-  @Param({"10", "100", "1000"})
+  @Param("100")
   public int numberOfMeters;
 
   /**
    * The sampling interval, represented in the format accepted by{@link java.time.Duration#parse}.
    */
-  @Param({"PT1S", "PT10S", "PT30S"})
+  @Param("PT30S")
   public String samplingInterval;
 
   @Setup

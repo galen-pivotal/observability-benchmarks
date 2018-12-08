@@ -1,0 +1,27 @@
+Benchmark                                                                                            (numberOfMeters)  (samplingInterval)   Mode  Cnt        Score        Error    Units
+ImpactOfMicrometerSamplingOnPutThroughput.puts_withMicrometerSampling                                         1000000            PT0.001S  thrpt    5  1355473.455 ± 200522.442    ops/s
+ImpactOfMicrometerSamplingOnPutThroughput.puts_withMicrometerSampling:·compiler.nmethodCodeSize               1000000            PT0.001S  thrpt    5     3805.906                    Kb
+ImpactOfMicrometerSamplingOnPutThroughput.puts_withMicrometerSampling:·compiler.nmethodSize                   1000000            PT0.001S  thrpt    5     6975.813                    Kb
+ImpactOfMicrometerSamplingOnPutThroughput.puts_withMicrometerSampling:·compiler.osrBytes                      1000000            PT0.001S  thrpt    5        8.020                    Kb
+ImpactOfMicrometerSamplingOnPutThroughput.puts_withMicrometerSampling:·compiler.osrCompiles                   1000000            PT0.001S  thrpt    5       16.000               methods
+ImpactOfMicrometerSamplingOnPutThroughput.puts_withMicrometerSampling:·compiler.osrTime                       1000000            PT0.001S  thrpt    5      154.152                    ms
+ImpactOfMicrometerSamplingOnPutThroughput.puts_withMicrometerSampling:·compiler.standardBytes                 1000000            PT0.001S  thrpt    5      422.480                    Kb
+ImpactOfMicrometerSamplingOnPutThroughput.puts_withMicrometerSampling:·compiler.standardCompiles              1000000            PT0.001S  thrpt    5     2893.000               methods
+ImpactOfMicrometerSamplingOnPutThroughput.puts_withMicrometerSampling:·compiler.standardTime                  1000000            PT0.001S  thrpt    5     5317.598                    ms
+ImpactOfMicrometerSamplingOnPutThroughput.puts_withMicrometerSampling:·compiler.totalBailouts                 1000000            PT0.001S  thrpt    5          ≈ 0               methods
+ImpactOfMicrometerSamplingOnPutThroughput.puts_withMicrometerSampling:·compiler.totalCompiles                 1000000            PT0.001S  thrpt    5     2909.000               methods
+ImpactOfMicrometerSamplingOnPutThroughput.puts_withMicrometerSampling:·compiler.totalInvalidates              1000000            PT0.001S  thrpt    5          ≈ 0               methods
+ImpactOfMicrometerSamplingOnPutThroughput.puts_withMicrometerSampling:·compiler.totalTime                     1000000            PT0.001S  thrpt    5     5471.750                    ms
+ImpactOfMicrometerSamplingOnPutThroughput.puts_withoutMicrometerSampling                                          N/A                 N/A  thrpt    5  1416293.111 ± 226405.584    ops/s
+ImpactOfMicrometerSamplingOnPutThroughput.puts_withoutMicrometerSampling:·compiler.nmethodCodeSize                N/A                 N/A  thrpt    5     3495.125                    Kb
+ImpactOfMicrometerSamplingOnPutThroughput.puts_withoutMicrometerSampling:·compiler.nmethodSize                    N/A                 N/A  thrpt    5     6397.586                    Kb
+ImpactOfMicrometerSamplingOnPutThroughput.puts_withoutMicrometerSampling:·compiler.osrBytes                       N/A                 N/A  thrpt    5        4.969                    Kb
+ImpactOfMicrometerSamplingOnPutThroughput.puts_withoutMicrometerSampling:·compiler.osrCompiles                    N/A                 N/A  thrpt    5       12.000               methods
+ImpactOfMicrometerSamplingOnPutThroughput.puts_withoutMicrometerSampling:·compiler.osrTime                        N/A                 N/A  thrpt    5       60.887                    ms
+ImpactOfMicrometerSamplingOnPutThroughput.puts_withoutMicrometerSampling:·compiler.standardBytes                  N/A                 N/A  thrpt    5      385.856                    Kb
+ImpactOfMicrometerSamplingOnPutThroughput.puts_withoutMicrometerSampling:·compiler.standardCompiles               N/A                 N/A  thrpt    5     2615.000               methods
+ImpactOfMicrometerSamplingOnPutThroughput.puts_withoutMicrometerSampling:·compiler.standardTime                   N/A                 N/A  thrpt    5     4726.729                    ms
+ImpactOfMicrometerSamplingOnPutThroughput.puts_withoutMicrometerSampling:·compiler.totalBailouts                  N/A                 N/A  thrpt    5          ≈ 0               methods
+ImpactOfMicrometerSamplingOnPutThroughput.puts_withoutMicrometerSampling:·compiler.totalCompiles                  N/A                 N/A  thrpt    5     2627.000               methods
+ImpactOfMicrometerSamplingOnPutThroughput.puts_withoutMicrometerSampling:·compiler.totalInvalidates               N/A                 N/A  thrpt    5          ≈ 0               methods
+ImpactOfMicrometerSamplingOnPutThroughput.puts_withoutMicrometerSampling:·compiler.totalTime                      N/A                 N/A  thrpt    5     4787.616                    ms
