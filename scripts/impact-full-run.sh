@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 
-set -eux
-
 # This script does a full run of the Impact benchmark.
+
+set -eux
+mkdir -p results
 
 # Parameters specific to the "impact" benchmark
 number_of_meters=100,1500
@@ -24,8 +25,8 @@ for threads in 1 100 max; do
     -psamplingInterval=${sampling_interval} \
     -pnumberOfMeters=${number_of_meters} \
     -t ${threads} \
-    -rf text -rff ${threads}-thread-results.txt \
-    -prof stack \
+    -rf text -rff results/${threads}-thread-results.txt \
     org.apache.geode.observability.benchmarks.impact.ImpactOfMicrometerSamplingOnPutThroughput \
-    | tee -a output.txt
+    -prof stack \
+    | tee -a results/output.txt
 done

@@ -20,5 +20,4 @@ java -jar target/benchmarks.jar \
   -psamplingInterval=${sampling_interval} \
   -pnumberOfMeters=${number_of_meters} \
   -t ${number_of_threads} \
-  org.apache.geode.observability.benchmarks.impact.ImpactOfMicrometerSamplingOnPutThroughput \
-  | tee -a output.txt
+  org.apache.geode.observability.benchmarks.impact.ImpactOfMicrometerSamplingOnPutThroughput
