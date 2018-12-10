@@ -9,7 +9,7 @@ mkdir -p results
 number_of_meters=100,1500
 sampling_interval=PT1S,PT30S
 
-# Run a short benchmark with no warmup
+# Run a full benchmark with one warmup iteration
 number_of_iterations=10
 iteration_length=10m
 number_of_warmup_iterations=1
