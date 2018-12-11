@@ -27,6 +27,5 @@ for threads in 1 100 max; do
     -t ${threads} \
     -rf text -rff results/${threads}-thread-results.txt \
     org.apache.geode.observability.benchmarks.impact.ImpactOfMicrometerSamplingOnPutThroughput \
-    -prof stack \
     | tee -a results/output.txt
 done
