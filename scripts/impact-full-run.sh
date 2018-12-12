@@ -9,25 +9,28 @@ mkdir -p results
 number_of_meters=1500
 sampling_interval=PT1S
 
-# Run a full benchmark with one warmup iteration
-number_of_forks=1
 number_of_iterations=10
-iteration_length=30m
-number_of_warmup_iterations=1
+iteration_length=30
+iteration_unit=m
 
-# There's no way to parameterize the number of put threads, so we'll run the benchmark in a loop,
-# each time with a different thread count.
+number_of_warmups=1
+warmup_length=1
+warmup_unit=m
 
-for threads in 1 100; do
+number_of_forks=1
+
+for number_of_threads in 1 100 max; do
   java -jar target/benchmarks.jar \
     -i ${number_of_iterations} \
-    -r ${iteration_length} \
-    -wi ${number_of_warmup_iterations} \
+    -r ${iteration_length}${iteration_unit} \
+    -wi ${number_of_warmups} \
+    -w ${warmup_length}${warmup_unit} \
+    -to $((${iteration_length}*2))m \
     -psamplingInterval=${sampling_interval} \
     -pnumberOfMeters=${number_of_meters} \
-    -t ${threads} \
+    -t ${number_of_threads} \
     -f ${number_of_forks} \
-    -rf csv -rff results/${threads}-thread-results.csv \
+    -rf text -rff results/${number_of_threads}-thread-results.txt \
     org.apache.geode.observability.benchmarks.impact.ImpactOfMicrometerSamplingOnPutThroughput \
     | tee -a results/output.txt
 done

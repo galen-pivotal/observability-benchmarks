@@ -7,17 +7,28 @@
 number_of_meters=1500
 sampling_interval=PT1S
 
-# Run a very, very quick benchmark with no warmup
 number_of_iterations=1
-iteration_length=5s
-number_of_warmup_iterations=0
-number_of_threads=1
+iteration_length=5
+iteration_unit=s
 
-java -jar target/benchmarks.jar \
-  -i ${number_of_iterations} \
-  -r ${iteration_length} \
-  -wi ${number_of_warmup_iterations} \
-  -psamplingInterval=${sampling_interval} \
-  -pnumberOfMeters=${number_of_meters} \
-  -t ${number_of_threads} \
-  org.apache.geode.observability.benchmarks.impact.ImpactOfMicrometerSamplingOnPutThroughput
+number_of_warmups=1
+warmup_length=1
+warmup_unit=s
+
+number_of_forks=1
+
+for number_of_threads in 4; do
+  java -jar target/benchmarks.jar \
+    -i ${number_of_iterations} \
+    -r ${iteration_length}${iteration_unit} \
+    -wi ${number_of_warmups} \
+    -w ${warmup_length}${warmup_unit} \
+    -to $((${iteration_length}*2))m \
+    -psamplingInterval=${sampling_interval} \
+    -pnumberOfMeters=${number_of_meters} \
+    -t ${number_of_threads} \
+    -f ${number_of_forks} \
+    -rf text -rff results/${number_of_threads}-thread-results.txt \
+    org.apache.geode.observability.benchmarks.impact.ImpactOfMicrometerSamplingOnPutThroughput \
+    | tee -a results/output.txt
+done
