@@ -3,6 +3,8 @@ package org.apache.geode.observability.states;
 import static org.apache.geode.distributed.ConfigurationProperties.LOCATORS;
 import static org.apache.geode.distributed.ConfigurationProperties.LOG_LEVEL;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.Setup;
 import org.openjdk.jmh.annotations.State;
@@ -18,8 +20,6 @@ import org.apache.geode.cache.RegionShortcut;
  */
 @State(Scope.Benchmark)
 public class WithCacheOpen {
-  public Object key = 2;
-  public Object value = "value";
   public Region<Object, Object> region;
   private Cache cache;
 
@@ -31,7 +31,7 @@ public class WithCacheOpen {
         .create();
     region = cache.createRegionFactory(RegionShortcut.LOCAL).create("region");
   }
-
+  
   @TearDown
   public void closeCache() {
     cache.close();

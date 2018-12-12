@@ -4,7 +4,7 @@
 # it's wired up correctly. The resulting measurements are not meaningful in any way.
 
 # Parameters specific to the "impact" benchmark
-number_of_meters=100
+number_of_meters=1500
 sampling_interval=PT1S
 
 # Run a very, very quick benchmark with no warmup
