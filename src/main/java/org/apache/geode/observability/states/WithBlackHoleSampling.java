@@ -63,6 +63,6 @@ public class WithBlackHoleSampling {
 
   @TearDown
   public void stopSampling() {
-    registry.stop();
+    registry.close();
   }
 }

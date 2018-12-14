@@ -74,6 +74,11 @@ THE POSSIBILITY OF SUCH DAMAGE.
             <version>${micrometer.version}</version>
         </dependency>
         <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-registry-prometheus</artifactId>
+            <version>${micrometer.version}</version>
+        </dependency>
+        <dependency>
             <groupId>org.apache.geode</groupId>
             <artifactId>geode-core</artifactId>
             <version>${geode.version}</version>
