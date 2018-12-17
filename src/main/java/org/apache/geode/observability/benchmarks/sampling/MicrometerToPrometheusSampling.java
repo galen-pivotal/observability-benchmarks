@@ -1,5 +1,6 @@
 package org.apache.geode.observability.benchmarks.sampling;
 
+import static java.lang.Math.*;
 import static java.util.concurrent.TimeUnit.SECONDS;
 
 import java.io.IOException;
@@ -7,12 +8,10 @@ import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.Executors;
-import java.util.stream.IntStream;
-
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.Random;
 import com.sun.net.httpserver.HttpServer;
 import io.micrometer.core.instrument.Counter;
-import io.micrometer.core.instrument.push.PushMeterRegistry;
 import io.micrometer.prometheus.PrometheusConfig;
 import io.micrometer.prometheus.PrometheusMeterRegistry;
 import org.openjdk.jmh.annotations.BenchmarkMode;
@@ -27,9 +26,6 @@ import org.openjdk.jmh.annotations.TearDown;
 import org.openjdk.jmh.annotations.Threads;
 import org.openjdk.jmh.annotations.Timeout;
 import org.openjdk.jmh.annotations.Warmup;
-import org.openjdk.jmh.infra.Blackhole;
-
-import org.apache.geode.observability.registries.BlackHoleRegistry;
 
 
 /**
@@ -43,22 +39,23 @@ import org.apache.geode.observability.registries.BlackHoleRegistry;
 @BenchmarkMode(Mode.Throughput)
 @State(Scope.Benchmark)
 public class MicrometerToPrometheusSampling {
-  private final Map<String, String> options = new HashMap<>();
   private PrometheusMeterRegistry registry;
   private HttpServer server;
+  private Thread incrementingThread;
+  private AtomicBoolean stopIncrementingThread;
 
 
   @Setup
   public void setup(){
     registry = new PrometheusMeterRegistry(PrometheusConfig.DEFAULT);
 
-    IntStream.range(0, 250)
-        .mapToObj(i -> "counter" + i)
-        .forEach(registry::counter);
-    IntStream.range(0, 250)
-        .mapToObj(i -> "gauge" + i)
-        .map(Counter::builder)
-        .forEach(counterBuilder -> counterBuilder.register(registry));
+    Map<String, Counter> theCounterMap = new HashMap<>();
+
+    for (int i = 0; i < numberOfMeters; i++)
+    {
+      String meterName = "micrometer.counter" + i;
+      theCounterMap.put(meterName, Counter.builder(meterName).register(registry));
+    }
 
     try {
       server = HttpServer.create(new InetSocketAddress(8080), 0);
@@ -71,6 +68,27 @@ public class MicrometerToPrometheusSampling {
       });
 
       new Thread(server::start).start();
+
+      stopIncrementingThread = new AtomicBoolean(false);
+      Random r = new Random();
+      incrementingThread = new Thread(() -> {
+        while (!stopIncrementingThread.get()) {
+          for (Map.Entry<String, Counter> entry : theCounterMap.entrySet()) {
+            entry.getValue().increment();
+            int value =  abs(r.nextInt()) % 2;
+            if (value == 1) {
+              entry.getValue().increment(10.0);
+            }
+          }
+          try {
+            Thread.sleep(1000);
+          } catch (InterruptedException e) {
+            e.printStackTrace();
+          }
+        }
+      });
+      incrementingThread.start();
+
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
@@ -80,18 +98,12 @@ public class MicrometerToPrometheusSampling {
   public void stopSampling() {
     server.stop(1); // FIXME I have no idea what this number does
     registry.close();
+    stopIncrementingThread.set(true);
   }
 
   /**
    * The number of meters to register. Half will be counters and half will be gauges.
    */
-  @Param("100")
+  @Param("250")
   public int numberOfMeters;
-
-  /**
-   * The sampling interval, represented in the format accepted by{@link java.time.Duration#parse}.
-   */
-  @Param("PT30S")
-  public String samplingInterval;
-
 }
