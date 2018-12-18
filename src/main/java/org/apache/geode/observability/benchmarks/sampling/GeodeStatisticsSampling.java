@@ -9,7 +9,6 @@ import org.openjdk.jmh.annotations.BenchmarkMode;
 import org.openjdk.jmh.annotations.Fork;
 import org.openjdk.jmh.annotations.Measurement;
 import org.openjdk.jmh.annotations.Mode;
-import org.openjdk.jmh.annotations.OutputTimeUnit;
 import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.Setup;
 import org.openjdk.jmh.annotations.State;
@@ -19,7 +18,6 @@ import org.openjdk.jmh.annotations.Warmup;
 
 import org.apache.geode.CancelCriterion;
 import org.apache.geode.StatisticDescriptor;
-import org.apache.geode.Statistics;
 import org.apache.geode.StatisticsType;
 import org.apache.geode.internal.statistics.LocalStatisticsFactory;
 import org.apache.geode.internal.statistics.SampleCollector;
